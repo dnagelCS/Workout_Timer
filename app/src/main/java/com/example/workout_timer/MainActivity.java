@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.startButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,5 +52,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void decrementRounds(View view) {
+    }
+
+    public void incrementRounds(View view) {
+    }
+
+    public void decrementWork(View view) {
+    }
+
+    public void incrementWork(View view) {
+    }
+
+    public void decrementRest(View view) {
+    }
+
+    public void incrementRest(View view) {
     }
 }
