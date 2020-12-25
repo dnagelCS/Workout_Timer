@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timerActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/workColor">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trainingSetsQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/starting_rounds_timer"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="72sp" />
+
+            <TextView
+                android:id="@+id/trainingWorkQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/starting_work"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="66sp" />
+
+            <TextView
+                android:id="@+id/trainingRestQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/starting_rest"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="66sp" />
+
+            <TextView
+                android:id="@+id/trainingMotivationalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/text_motivational_timer"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="46sp" />
+
+            <TextView
+                android:id="@+id/trainingPausedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/text_paused_timer"
+                android:textAllCaps="true"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="46sp" />
+
+            <Button
+                android:id="@+id/pauseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:onClick="pauseTimer"
+                android:text="@string/pause"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="46sp" />
+
+            <Button
+                android:id="@+id/continueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:onClick="continueTimer"
+                android:text="@string/Continue"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="46sp" />
+
+            <Button
+                android:id="@+id/endBtn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="@string/btn_end"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="46sp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
