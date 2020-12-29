@@ -9,6 +9,9 @@ import com.example.workout_timer.models.WorkTimer;
 import static com.example.workout_timer.models.WorkTimer.COUNTDOWN_TIMER_INTERVAL_MILS;
 import static com.example.workout_timer.models.WorkTimer.DEFAULT_WORK_MILS;
 import static com.example.workout_timer.models.RestTimer.DEFAULT_REST_MILS;
+import static java.lang.String.format;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpFAB() {
-        FloatingActionButton fab = findViewById(R.id.startButton);
+        ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
         fab.setOnClickListener(view -> {
             //these need to be called in some kind of thread or loop for the amount of time that
             //rounds exists. Should I have instantiated them before this point?
@@ -130,8 +133,9 @@ public class MainActivity extends AppCompatActivity {
         displayRounds();
     }
 
+    @SuppressLint("DefaultLocale")
     private void displayRounds() {
-        mTv_setNumRounds.setText(rounds);
+        mTv_setNumRounds.setText(format("%d", rounds));
     }
 
     @SuppressLint("DefaultLocale")
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         int displayMinutes = seconds/60;
         int displaySeconds = seconds%60;
 
-        mTv_setRest.setText(String.format("%d : %d", displayMinutes, displaySeconds));
+        mTv_setRest.setText(format("%d : %d", displayMinutes, displaySeconds));
     }
 
     @SuppressLint("DefaultLocale")
@@ -149,6 +153,6 @@ public class MainActivity extends AppCompatActivity {
         int displayMinutes = seconds/60;
         int displaySeconds = seconds%60;
 
-        mTv_setWork.setText(String.format("%d : %d", displayMinutes, displaySeconds));
+        mTv_setWork.setText(format("%d : %d", displayMinutes, displaySeconds));
     }
 }
