@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         workTime -= 1000;
         displayWorkTimerQuantity();
     }
+
     public void incrementWork(View view) {
         workTime += 1000;
         displayWorkTimerQuantity();
@@ -132,19 +133,27 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private void displayRestTimerQuantity() {
-        int seconds = (int) restTime/ 1000;
-        int displayMinutes = seconds/60;
-        int displaySeconds = seconds%60;
+        int seconds = (int) restTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
 
-        mTv_setRest.setText(format("%d : %d", displayMinutes, displaySeconds));
+        if (displaySeconds < 10) {
+            mTv_setRest.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_setRest.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
     }
 
     @SuppressLint("DefaultLocale")
     private void displayWorkTimerQuantity() {
-        int seconds = (int) workTime/ 1000;
-        int displayMinutes = seconds/60;
-        int displaySeconds = seconds%60;
+        int seconds = (int) workTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
 
-        mTv_setWork.setText(format("%d : %d", displayMinutes, displaySeconds));
+        if (displaySeconds < 10) {
+            mTv_setWork.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_setWork.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
     }
 }
