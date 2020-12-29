@@ -78,30 +78,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decrementWork(View view) {
-        decrementSecond(workTime);
+        workTime -= 1000;
         displayWorkTimerQuantity();
     }
     public void incrementWork(View view) {
-        incrementSecond(workTime);
+        workTime += 1000;
         displayWorkTimerQuantity();
     }
 
     public void decrementRest(View view) {
-        decrementSecond(restTime);
+        restTime -= 1000;
         displayRestTimerQuantity();
     }
 
     public void incrementRest(View view) {
-        incrementSecond(restTime);
+        restTime += 1000;
         displayRestTimerQuantity();
-    }
-
-    private void decrementSecond(long decrementThisTimer) {
-        decrementThisTimer -= 1000;
-    }
-
-    private void incrementSecond(long incrementThisTimer) {
-        incrementThisTimer += 1000;
     }
 
     private void setUpFAB() {
