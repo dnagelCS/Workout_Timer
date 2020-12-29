@@ -1,9 +1,18 @@
 package com.example.workout_timer;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import com.example.workout_timer.models.RestTimer;
+import com.example.workout_timer.models.WorkTimer;
+
+import static com.example.workout_timer.models.WorkTimer.COUNTDOWN_TIMER_INTERVAL_MILS;
+import static com.example.workout_timer.models.WorkTimer.DEFAULT_WORK_MILS;
+import static com.example.workout_timer.models.RestTimer.DEFAULT_REST_MILS;
+import static java.lang.String.format;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,8 +21,18 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int DEFAULT_ROUNDS = 10;
+    private RestTimer mRestTimer;
+    private WorkTimer mWorkTimer;
+    private long workTime;
+    private long restTime;
+    private TextView mTv_setWork;
+    private TextView mTv_setRest;
+    private TextView mTv_setNumRounds;
+    private int rounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +41,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.startButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setUpFAB();
+        setUpDisplay();
     }
 
     @Override
@@ -55,20 +68,90 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decrementRounds(View view) {
+        rounds--;
+        displayRounds();
     }
 
     public void incrementRounds(View view) {
+        rounds++;
+        displayRounds();
     }
 
     public void decrementWork(View view) {
+        workTime -= 1000;
+        displayWorkTimerQuantity();
     }
 
     public void incrementWork(View view) {
+        workTime += 1000;
+        displayWorkTimerQuantity();
     }
 
     public void decrementRest(View view) {
+        restTime -= 1000;
+        displayRestTimerQuantity();
     }
 
     public void incrementRest(View view) {
+        restTime += 1000;
+        displayRestTimerQuantity();
+    }
+
+    private void setUpFAB() {
+        ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
+        fab.setOnClickListener(view -> {
+            mWorkTimer = new WorkTimer(workTime, COUNTDOWN_TIMER_INTERVAL_MILS);
+            mRestTimer = new RestTimer(restTime, COUNTDOWN_TIMER_INTERVAL_MILS);
+            //go to the TimerActivity now
+        });
+    }
+
+    /**
+     * display that allows user to enter input
+     */
+    private void setUpDisplay() {
+        //mWorkTimer = new WorkTimer(DEFAULT_WORK_MILS, COUNTDOWN_TIMER_INTERVAL_MILS);
+        workTime = DEFAULT_WORK_MILS;
+        restTime = DEFAULT_REST_MILS;
+        rounds = DEFAULT_ROUNDS;
+
+        mTv_setWork = findViewById(R.id.workQuantity);
+        mTv_setRest = findViewById(R.id.restQuantity);
+        mTv_setNumRounds = findViewById(R.id.setsQuantity);
+
+        displayWorkTimerQuantity();
+        displayRestTimerQuantity();
+        displayRounds();
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void displayRounds() {
+        mTv_setNumRounds.setText(format("%d", rounds));
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void displayRestTimerQuantity() {
+        int seconds = (int) restTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
+
+        if (displaySeconds < 10) {
+            mTv_setRest.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_setRest.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void displayWorkTimerQuantity() {
+        int seconds = (int) workTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
+
+        if (displaySeconds < 10) {
+            mTv_setWork.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_setWork.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
     }
 }
