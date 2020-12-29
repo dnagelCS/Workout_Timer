@@ -100,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
     private void setUpFAB() {
         ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
         fab.setOnClickListener(view -> {
-            //these need to be called in some kind of thread or loop for the amount of time that
-            //rounds exists. Should I have instantiated them before this point?
             mWorkTimer = new WorkTimer(workTime, COUNTDOWN_TIMER_INTERVAL_MILS);
             mRestTimer = new RestTimer(restTime, COUNTDOWN_TIMER_INTERVAL_MILS);
             //go to the TimerActivity now
