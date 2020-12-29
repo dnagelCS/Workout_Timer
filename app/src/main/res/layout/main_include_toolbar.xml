@@ -12,6 +12,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/primaryColorDark"
         app:popupTheme="@style/Theme.Workout_Timer.PopupOverlay" />
 </com.google.android.material.appbar.AppBarLayout>
