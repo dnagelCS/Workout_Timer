@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.workout_timer.models.RestTimer;
 import com.example.workout_timer.models.WorkTimer;
 
+import static com.example.workout_timer.lib.Utils.showInfoDialog;
 import static com.example.workout_timer.models.WorkTimer.COUNTDOWN_TIMER_INTERVAL_MILS;
 import static com.example.workout_timer.models.WorkTimer.DEFAULT_WORK_MILS;
 import static com.example.workout_timer.models.RestTimer.DEFAULT_REST_MILS;
@@ -60,11 +61,23 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                showSettings();
+                return true;
+            case R.id.action_about:
+                showAbout();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettings() {
+    }
+
+    private void showAbout() {
+        showInfoDialog(this, R.string.app_name, R.string.about_message);
     }
 
     public void decrementRounds(View view) {
