@@ -1,5 +1,6 @@
 package com.example.workout_timer.models;
 
+import android.annotation.SuppressLint;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class WorkTimer extends CountDownTimer {
      */
     @Override
     public void onTick(long millisUntilFinished) {
-
+        displayRestTimerQuantity(millisUntilFinished);
     }
 
     /**
@@ -44,6 +45,7 @@ public class WorkTimer extends CountDownTimer {
 
     }
 
+    @SuppressLint("DefaultLocale")
     private void displayRestTimerQuantity(long millisUntilFinished) {
         int seconds = (int) millisUntilFinished / 1000;
         int displayMinutes = seconds / 60;
