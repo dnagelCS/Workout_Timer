@@ -1,18 +1,16 @@
-package com.example.workout_timer;
+package com.example.workout_timer.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.workout_timer.models.RestTimer;
-import com.example.workout_timer.models.WorkTimer;
+import com.example.workout_timer.R;
 
-import static com.example.workout_timer.models.WorkTimer.COUNTDOWN_TIMER_INTERVAL_MILS;
 import static com.example.workout_timer.models.WorkTimer.DEFAULT_WORK_MILS;
 import static com.example.workout_timer.models.RestTimer.DEFAULT_REST_MILS;
 import static java.lang.String.format;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,8 +23,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_ROUNDS = 10;
-    private RestTimer mRestTimer;
-    private WorkTimer mWorkTimer;
     private long workTime;
     private long restTime;
     private TextView mTv_setWork;
@@ -100,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
     private void setUpFAB() {
         ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
         fab.setOnClickListener(view -> {
-            mWorkTimer = new WorkTimer(workTime, COUNTDOWN_TIMER_INTERVAL_MILS);
-            mRestTimer = new RestTimer(restTime, COUNTDOWN_TIMER_INTERVAL_MILS);
             //go to the TimerActivity now
+            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+            intent.putExtra("ROUNDS", rounds);
+            intent.putExtra("REST_TIME", restTime);
+            intent.putExtra("WORK_TIME", workTime);
+            startActivity(intent);
         });
     }
 
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         int seconds = (int) restTime / 1000;
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
-
+      
         if (displaySeconds < 10) {
             mTv_setRest.setText(format("%d : 0%d", displayMinutes, displaySeconds));
         } else {

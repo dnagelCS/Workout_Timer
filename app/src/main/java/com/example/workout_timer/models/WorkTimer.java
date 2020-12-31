@@ -1,12 +1,14 @@
 package com.example.workout_timer.models;
 
 import android.os.CountDownTimer;
+import android.widget.TextView;
+
+import static java.lang.String.format;
 
 public class WorkTimer extends CountDownTimer {
     public final static long DEFAULT_WORK_MILS = 60000;
     public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1000;
-    private long minutesLeft;
-    private long secondsLeft;
+    public TextView mTv_work;
 
     /**
      * @param millisInFuture    The number of millis in the future from the call
@@ -19,16 +21,38 @@ public class WorkTimer extends CountDownTimer {
         super(millisInFuture, countDownInterval);
     }
 
+    public WorkTimer(long millisInFuture, TextView tV_work) {
+        super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+        mTv_work = tV_work;
+    }
+
     /**
-     * @param millisUntilFinished
+     * Callback fired on regular interval.
+     *
+     * @param millisUntilFinished The amount of time until finished.
      */
     @Override
     public void onTick(long millisUntilFinished) {
 
     }
 
+    /**
+     * Callback fired when the time is up.
+     */
     @Override
     public void onFinish() {
 
+    }
+
+    private void displayRestTimerQuantity(long millisUntilFinished) {
+        int seconds = (int) millisUntilFinished / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
+
+        if (displaySeconds < 10) {
+            mTv_work.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_work.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
     }
 }
