@@ -85,83 +85,88 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playWorkTimer() {
-        mWorkTimer = new WorkTimer(workTime, mTv_work);
+        new Thread(){
+            public void run(){
+                mWorkTimer = new WorkTimer(workTime);
+            }
+        };
+
     }
 
-//    class WorkTimer extends CountDownTimer {
-//
-//        /**
-//         * @param millisInFuture The number of millis in the future from the call
-//         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
-//         *                       is called.
-//         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
-//         * {@link #onTick(long)} callbacks.
-//         */
-//        public WorkTimer(long millisInFuture) {
-//            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
-//        }
-//
-//        /**
-//         * Callback fired on regular interval.
-//         *
-//         * @param millisUntilFinished The amount of time until finished.
-//         */
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            displayWorkTimerQuantity();
-//            System.out.println("I'm at WorkTimer.onTick");
-//        }
-//
-//        /**
-//         * Callback fired when the time is up.
-//         */
-//        @Override
-//        public void onFinish() {
-//            //play sounds
-//            playRestTimer();
-//            rounds--;
-//
-//        }
-//    }
+    class WorkTimer extends CountDownTimer {
+
+        /**
+         * @param millisInFuture The number of millis in the future from the call
+         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                       is called.
+         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
+         * {@link #onTick(long)} callbacks.
+         */
+        public WorkTimer(long millisInFuture) {
+            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+        }
+
+        /**
+         * Callback fired on regular interval.
+         *
+         * @param millisUntilFinished The amount of time until finished.
+         */
+        @Override
+        public void onTick(long millisUntilFinished) {
+            displayWorkTimerQuantity();
+            System.out.println("I'm at WorkTimer.onTick");
+        }
+
+        /**
+         * Callback fired when the time is up.
+         */
+        @Override
+        public void onFinish() {
+            //play sounds
+            playRestTimer();
+            rounds--;
+
+        }
+    }
 
     private void playRestTimer() {
         if (rounds > 0) {
-            mRestTimer = new RestTimer(restTime, mTv_rest);
+            mRestTimer = new RestTimer(restTime);
         }
         //else { play the final sounds }
     }
 
-//    class RestTimer extends CountDownTimer {
-//
-//        /**
-//         * @param millisInFuture The number of millis in the future from the call
-//         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
-//         *                       is called.
-//         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
-//         * {@link #onTick(long)} callbacks.
-//         */
-//        public RestTimer(long millisInFuture) {
-//            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
-//        }
-//
-//        /**
-//         * Callback fired on regular interval.
-//         *
-//         * @param millisUntilFinished The amount of time until finished.
-//         */
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            displayRestTimerQuantity();
-//        }
-//
-//        /**
-//         * Callback fired when the time is up.
-//         */
-//        @Override
-//        public void onFinish() {
-//            //play sounds
-//            playWorkTimer();
-//
-//        }
-//    }
+    class RestTimer extends CountDownTimer {
+
+        /**
+         * @param millisInFuture The number of millis in the future from the call
+         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                       is called.
+         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
+         * {@link #onTick(long)} callbacks.
+         */
+        public RestTimer(long millisInFuture) {
+            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+        }
+
+        /**
+         * Callback fired on regular interval.
+         *
+         * @param millisUntilFinished The amount of time until finished.
+         */
+        @Override
+        public void onTick(long millisUntilFinished) {
+            displayRestTimerQuantity();
+        }
+
+        /**
+         * Callback fired when the time is up.
+         */
+        @Override
+        public void onFinish() {
+            //play sounds
+            playWorkTimer();
+
+        }
+    }
 }
