@@ -8,7 +8,7 @@ import static com.example.workout_timer.models.WorkTimer.COUNTDOWN_TIMER_INTERVA
 import static java.lang.String.format;
 
 public class RestTimer extends CountDownTimer {
-    public static final long DEFAULT_REST_MILS = 10000;
+
     private TextView mTv_rest;
     /**
      * @param millisInFuture    The number of millis in the future from the call

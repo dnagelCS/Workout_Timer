@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.workout_timer.R;
 import com.example.workout_timer.models.RestTimer;
 import com.example.workout_timer.models.WorkTimer;
-
 import static java.lang.String.format;
 
 public class TimerActivity extends AppCompatActivity {
@@ -22,17 +22,19 @@ public class TimerActivity extends AppCompatActivity {
     private int rounds;
     private TextView mTv_work;
     private TextView mTv_rest;
-    private  TextView mTv_rounds;
+    private TextView mTv_rounds;
+
+    public final static long DEFAULT_WORK_MILS = 60000;
+    public static final long DEFAULT_REST_MILS = 10000;
+    public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
-        mTv_work = findViewById(R.id.trainingWorkQuantity);
-        mTv_rest = findViewById(R.id.trainingRestQuantity);
-        mTv_rounds = findViewById(R.id.trainingSetsQuantity);
         getIncomingData();
-        playTimers();
+        setUpView();
+        playWorkTimer();
 
     }
 
@@ -40,6 +42,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void pauseTimer(View view) {
+    }
+
+    private void setUpView() {
+        mTv_work = findViewById(R.id.trainingWorkQuantity);
+        mTv_rest = findViewById(R.id.trainingRestQuantity);
+        mTv_rounds = findViewById(R.id.trainingSetsQuantity);
+        displayRounds();
+        displayWorkTimerQuantity();
     }
 
     private void getIncomingData() {
@@ -50,15 +60,108 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @SuppressLint("DefaultLocale")
-    private void playTimers() {
-        //mWorkTimer = new WorkTimer(workTime, mTv_work);
-        //mRestTimer = new RestTimer(restTime, mTv_rest);
+    private void displayWorkTimerQuantity() {
+        int seconds = (int) workTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
 
-        while (rounds > 0) {
-            mTv_rounds.setText(format("%d", rounds));
-            new WorkTimer(workTime, mTv_work).start();
-            new RestTimer(restTime, mTv_rest).start();
-            rounds--;
-        }
+        String leadingZero = displaySeconds > 9 ? "" : "0";
+        mTv_work.setText(format("%d : %S%d", displayMinutes, leadingZero, displaySeconds));
     }
+
+    @SuppressLint("DefaultLocale")
+    private void displayRestTimerQuantity() {
+        int seconds = (int) restTime / 1000;
+        int displayMinutes = seconds / 60;
+        int displaySeconds = seconds % 60;
+
+        String leadingZero = displaySeconds > 9 ? "" : "0";
+        mTv_rest.setText(format("%d : %s%d", displayMinutes, leadingZero, displaySeconds));
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void displayRounds() {
+        mTv_rounds.setText(format("%d", rounds));
+    }
+
+    private void playWorkTimer() {
+        mWorkTimer = new WorkTimer(workTime, mTv_work);
+    }
+
+//    class WorkTimer extends CountDownTimer {
+//
+//        /**
+//         * @param millisInFuture The number of millis in the future from the call
+//         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+//         *                       is called.
+//         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
+//         * {@link #onTick(long)} callbacks.
+//         */
+//        public WorkTimer(long millisInFuture) {
+//            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+//        }
+//
+//        /**
+//         * Callback fired on regular interval.
+//         *
+//         * @param millisUntilFinished The amount of time until finished.
+//         */
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            displayWorkTimerQuantity();
+//            System.out.println("I'm at WorkTimer.onTick");
+//        }
+//
+//        /**
+//         * Callback fired when the time is up.
+//         */
+//        @Override
+//        public void onFinish() {
+//            //play sounds
+//            playRestTimer();
+//            rounds--;
+//
+//        }
+//    }
+
+    private void playRestTimer() {
+        if (rounds > 0) {
+            mRestTimer = new RestTimer(restTime, mTv_rest);
+        }
+        //else { play the final sounds }
+    }
+
+//    class RestTimer extends CountDownTimer {
+//
+//        /**
+//         * @param millisInFuture The number of millis in the future from the call
+//         *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+//         *                       is called.
+//         * @variable COUNTDOWN_TIMER_INTERVAL_MILS The interval along the way to receive
+//         * {@link #onTick(long)} callbacks.
+//         */
+//        public RestTimer(long millisInFuture) {
+//            super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+//        }
+//
+//        /**
+//         * Callback fired on regular interval.
+//         *
+//         * @param millisUntilFinished The amount of time until finished.
+//         */
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            displayRestTimerQuantity();
+//        }
+//
+//        /**
+//         * Callback fired when the time is up.
+//         */
+//        @Override
+//        public void onFinish() {
+//            //play sounds
+//            playWorkTimer();
+//
+//        }
+//    }
 }

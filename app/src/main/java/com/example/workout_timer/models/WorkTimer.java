@@ -1,8 +1,12 @@
 package com.example.workout_timer.models;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.CountDownTimer;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static java.lang.String.format;
 
@@ -10,6 +14,8 @@ public class WorkTimer extends CountDownTimer {
     public final static long DEFAULT_WORK_MILS = 60000;
     public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1000;
     public TextView mTv_work;
+    private Context timerActivityContext;
+    private Resources resources;
 
     /**
      * @param millisInFuture    The number of millis in the future from the call
@@ -32,6 +38,13 @@ public class WorkTimer extends CountDownTimer {
     public WorkTimer(long millisInFuture, TextView tV_work) {
         super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
         mTv_work = tV_work;
+    }
+
+    public WorkTimer(long millisInFuture, Context context){
+        super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
+        timerActivityContext = context;
+        resources = timerActivityContext.getResources();
+
     }
 
     /**
@@ -64,4 +77,5 @@ public class WorkTimer extends CountDownTimer {
             mTv_work.setText(format("%d : %d", displayMinutes, displaySeconds));
         }
     }
+
 }
