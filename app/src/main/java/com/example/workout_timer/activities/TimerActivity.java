@@ -1,10 +1,13 @@
 package com.example.workout_timer.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,9 +34,27 @@ public class TimerActivity extends AppCompatActivity {
         mTv_work = findViewById(R.id.trainingWorkQuantity);
         mTv_rest = findViewById(R.id.trainingRestQuantity);
         mTv_rounds = findViewById(R.id.trainingSetsQuantity);
+        setupActionBar();
         getIncomingData();
         playTimers();
 
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     public void continueTimer(View view) {
