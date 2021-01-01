@@ -21,8 +21,15 @@ public class RestTimer extends CountDownTimer {
         super(millisInFuture, countDownInterval);
     }
 
-    public RestTimer(long restTime, TextView tV_rest) {
-        super(restTime, COUNTDOWN_TIMER_INTERVAL_MILS);
+    /**
+     *
+     * @param millisInFuture The number of millis in the future from the call
+     *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+     *                       is called.
+     * @param tV_rest The TextView that displays timer.
+     */
+    public RestTimer(long millisInFuture, TextView tV_rest) {
+        super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
         mTv_rest = tV_rest;
     }
 

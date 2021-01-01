@@ -22,6 +22,13 @@ public class WorkTimer extends CountDownTimer {
         super(millisInFuture, countDownInterval);
     }
 
+    /**
+     *
+     * @param millisInFuture The number of millis in the future from the call
+     *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+     *                       is called.
+     * @param tV_work The TextView that displays timer.
+     */
     public WorkTimer(long millisInFuture, TextView tV_work) {
         super(millisInFuture, COUNTDOWN_TIMER_INTERVAL_MILS);
         mTv_work = tV_work;
