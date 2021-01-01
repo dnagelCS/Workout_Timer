@@ -18,6 +18,7 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textStyle="bold"
-        app:iconPadding="@dimen/fab_margin">
+        app:iconPadding="@dimen/fab_margin"
+        tools:ignore="RtlCompat">
     </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
 </merge>
