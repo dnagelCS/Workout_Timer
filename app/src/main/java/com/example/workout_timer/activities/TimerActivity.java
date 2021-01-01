@@ -51,13 +51,13 @@ public class TimerActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private void playTimers() {
-        mWorkTimer = new WorkTimer(workTime, mTv_work);
-        mRestTimer = new RestTimer(restTime, mTv_rest);
+        //mWorkTimer = new WorkTimer(workTime, mTv_work);
+        //mRestTimer = new RestTimer(restTime, mTv_rest);
 
         while (rounds > 0) {
             mTv_rounds.setText(format("%d", rounds));
-            mWorkTimer.start();
-            mRestTimer.start();
+            new WorkTimer(workTime, mTv_work).start();
+            new RestTimer(restTime, mTv_rest).start();
             rounds--;
         }
     }
