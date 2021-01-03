@@ -41,7 +41,6 @@ public class TimerActivity extends AppCompatActivity {
     private TextView mTv_motivation;
     private Button pauseBtn;
     private Button continueBtn;
-    private Button endButton;
 
     public final static long DEFAULT_WORK_MILS = 60000;
     public static final long DEFAULT_REST_MILS = 10000;
@@ -85,6 +84,9 @@ public class TimerActivity extends AppCompatActivity {
             mRestTimer.start();
             setRestView();
         }
+
+        //display pauseBtn again
+        pauseBtn.setVisibility(View.VISIBLE);
     }
 
     public void pauseTimer(View view) {
@@ -175,6 +177,16 @@ public class TimerActivity extends AppCompatActivity {
         mWorkTimer = new WorkTimer(workTime);
         mWorkTimer.start();
         isWorkTimerRunning = true;
+    }
+
+    public void endTimer(View view) {
+        if(isWorkTimerRunning){
+            mWorkTimer.cancel();
+        } else if(isRestTimerRunning){
+            mRestTimer.cancel();
+        }
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     class WorkTimer extends CountDownTimer {

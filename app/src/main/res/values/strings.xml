@@ -17,7 +17,7 @@
     <string name="starting_rest">00 : 30</string>
     <string name="pause">Pause</string>
     <string name="Continue">Continue</string>
-    <string name="btn_end">Hold To End</string>
+    <string name="btn_end">End</string>
     <string name="text_motivational_timer">Work It</string>
     <string name="text_paused_timer">Paused</string>
     <string name="about">About</string>
