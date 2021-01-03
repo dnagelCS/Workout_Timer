@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/main_include_rounds">
+
+    <TextView
+        android:id="@+id/setsText"
+        style="@style/styleTextViewTitle"
+        android:text="@string/rounds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/setsMinusBtn"
+        style="@style/stylePlusMinusButtons"
+        android:onClick="decrementRounds"
+        android:text="@string/sign_minus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/setsQuantity"
+        app:layout_constraintTop_toBottomOf="@id/setsText" />
+
+    <TextView
+        android:id="@+id/setsQuantity"
+        style="@style/styleTextViewQuantity"
+        android:text="@string/starting_rounds_main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setsText" />
+
+    <Button
+        android:id="@+id/setsPlusBtn"
+        style="@style/stylePlusMinusButtons"
+        android:onClick="incrementRounds"
+        android:text="@string/sign_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/setsQuantity"
+        app:layout_constraintTop_toBottomOf="@id/setsText" />
+
+
+</merge>

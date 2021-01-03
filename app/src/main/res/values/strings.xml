@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Interval Timer</string>
-    <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -22,4 +21,6 @@
     <string name="text_paused_timer">Paused</string>
     <string name="about">About</string>
     <string name="about_message">Interval Timer Application created by\nRachel Gutmann and Devora Nagel</string>
+    <string name="beep_sound">Beep Sound</string>
+    <string name="tick_sound">Tick Sound</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import android.os.CountDownTimer;
@@ -47,6 +48,9 @@ public class TimerActivity extends AppCompatActivity {
     public final static long DEFAULT_WORK_MILS = 60_000;
     public static final long DEFAULT_REST_MILS = 10_000;
     public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1_000;
+
+    private MediaPlayer mpBeep;
+    private MediaPlayer mpTick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
