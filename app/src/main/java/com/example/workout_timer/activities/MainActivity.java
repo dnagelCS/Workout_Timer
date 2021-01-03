@@ -1,6 +1,7 @@
 package com.example.workout_timer.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveToSharedPref() {
+        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear();
         editor.putBoolean(mKeyBeepSound, mPrefBeepSound);
