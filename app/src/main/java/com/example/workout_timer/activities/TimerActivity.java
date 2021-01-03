@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.workout_timer.R;
-import com.example.workout_timer.models.RestTimer;
-import com.example.workout_timer.models.WorkTimer;
+
 import static java.lang.String.format;
 
 public class TimerActivity extends AppCompatActivity {
@@ -75,8 +74,13 @@ public class TimerActivity extends AppCompatActivity {
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
-        String leadingZero = displaySeconds > 9 ? "" : "0";
-        mTv_rest.setText(format("%d : %s%d", displayMinutes, leadingZero, displaySeconds));
+        if (displaySeconds < 10) {
+            mTv_work.setText(format("%d : 0%d", displayMinutes, displaySeconds));
+        } else {
+            mTv_work.setText(format("%d : %d", displayMinutes, displaySeconds));
+        }
+//        String leadingZero = displaySeconds > 9 ? "" : "0";
+//        mTv_rest.setText(format("%d : %s%d", displayMinutes, leadingZero, displaySeconds));
     }
 
     @SuppressLint("DefaultLocale")
@@ -85,12 +89,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playWorkTimer() {
-        new Thread(){
-            public void run(){
-                mWorkTimer = new WorkTimer(workTime);
-            }
-        };
-
+        mWorkTimer = new WorkTimer(workTime);
+        mWorkTimer.start();
     }
 
     class WorkTimer extends CountDownTimer {
@@ -113,8 +113,8 @@ public class TimerActivity extends AppCompatActivity {
          */
         @Override
         public void onTick(long millisUntilFinished) {
+            workTime = millisUntilFinished;
             displayWorkTimerQuantity();
-            System.out.println("I'm at WorkTimer.onTick");
         }
 
         /**
@@ -132,6 +132,7 @@ public class TimerActivity extends AppCompatActivity {
     private void playRestTimer() {
         if (rounds > 0) {
             mRestTimer = new RestTimer(restTime);
+            mRestTimer.start();
         }
         //else { play the final sounds }
     }
@@ -156,6 +157,7 @@ public class TimerActivity extends AppCompatActivity {
          */
         @Override
         public void onTick(long millisUntilFinished) {
+            restTime = millisUntilFinished;
             displayRestTimerQuantity();
         }
 
