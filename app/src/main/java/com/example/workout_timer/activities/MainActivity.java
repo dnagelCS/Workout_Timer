@@ -1,6 +1,7 @@
 package com.example.workout_timer.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +9,8 @@ import android.os.Bundle;
 import com.example.workout_timer.R;
 
 import static com.example.workout_timer.lib.Utils.showInfoDialog;
-import static com.example.workout_timer.models.WorkTimer.DEFAULT_WORK_MILS;
-import static com.example.workout_timer.models.RestTimer.DEFAULT_REST_MILS;
+import static com.example.workout_timer.activities.TimerActivity.DEFAULT_WORK_MILS;
+import static com.example.workout_timer.activities.TimerActivity.DEFAULT_REST_MILS;
 import static java.lang.String.format;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveToSharedPref() {
+        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear();
         editor.putBoolean(mKeyBeepSound, mPrefBeepSound);
@@ -192,11 +194,9 @@ public class MainActivity extends AppCompatActivity {
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
-        if (displaySeconds < 10) {
-            mTv_setRest.setText(format("%d : 0%d", displayMinutes, displaySeconds));
-        } else {
-            mTv_setRest.setText(format("%d : %d", displayMinutes, displaySeconds));
-        }
+
+        String leadingZero = displaySeconds > 9? "" : "0";
+        mTv_setRest.setText(format("%d : %S%d", displayMinutes, leadingZero, displaySeconds));
     }
 
     @SuppressLint("DefaultLocale")
@@ -205,10 +205,7 @@ public class MainActivity extends AppCompatActivity {
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
-        if (displaySeconds < 10) {
-            mTv_setWork.setText(format("%d : 0%d", displayMinutes, displaySeconds));
-        } else {
-            mTv_setWork.setText(format("%d : %d", displayMinutes, displaySeconds));
-        }
+        String leadingZero = displaySeconds > 9? "" : "0";
+        mTv_setWork.setText(format("%d : %S%d", displayMinutes, leadingZero, displaySeconds));
     }
 }
