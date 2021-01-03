@@ -1,67 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/include_rest"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:orientation="vertical"
-    tools:showIn="@layout/content_main">
+    tools:showIn="@layout/main_include_content_all_items">
 
-    <TextView
-        android:id="@+id/restText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:text="@string/rest"
-        android:textSize="32sp"
-        app:layout_constraintTop_toBottomOf="@+id/workLinear" />
+    <include layout="@layout/main_include_rest_content" />
 
-    <LinearLayout
-        android:id="@+id/restLinear"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/restText">
-
-        <Button
-            android:id="@+id/restMinusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="decrementRest"
-            android:text="@string/sign_minus"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-        <TextView
-
-            android:id="@+id/restQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:freezesText="true"
-            android:gravity="center_horizontal"
-            android:text="@string/starting_rest"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="26sp" />
-
-        <Button
-            android:id="@+id/restPlusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="incrementRest"
-            android:text="@string/sign_plus"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

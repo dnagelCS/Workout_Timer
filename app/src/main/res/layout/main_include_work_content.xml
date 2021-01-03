@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/main_include_work">
+
+    <TextView
+        android:id="@+id/workText"
+        style="@style/styleTextViewTitle"
+        android:text="@string/work"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/workMinusBtn"
+        style="@style/stylePlusMinusButtons"
+        android:onClick="decrementWork"
+        android:text="@string/sign_minus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/workQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/workText" />
+
+
+    <TextView
+        android:id="@+id/workQuantity"
+        style="@style/styleTextViewQuantity"
+        android:text="@string/starting_work"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workText" />
+
+    <Button
+        android:id="@+id/workPlusBtn"
+        style="@style/stylePlusMinusButtons"
+        android:onClick="incrementWork"
+        android:text="@string/sign_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/workQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/workText" />
+</merge>
