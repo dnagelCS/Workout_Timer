@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean mPrefBeepSound, mPrefTickSound;
     private String mKeyBeepSound, mKeyTickSound;
-    private MenuItem beepSound = findViewById(R.id.beep_sound);
-    private MenuItem tickSound = findViewById(R.id.tick_sound);
+    private MenuItem beepSound, tickSound;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -91,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private void setFieldsToResValues() {
         mKeyBeepSound = getString(R.string.beep_sound);
         mKeyTickSound = getString(R.string.tick_sound);
+        beepSound = findViewById(R.id.beep_sound);
+        tickSound = findViewById(R.id.tick_sound);
     }
 
     /**
