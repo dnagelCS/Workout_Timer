@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#536dff</color>
-    <color name="primaryColorDark">#0043cb</color>
-    <color name="accentColor">#b0bec5</color>
+    <!--Primary brand color-->
+    <color name="primaryColor">#00838f</color>
+    <color name="primaryLightColor">#4fb3bf</color>
+    <color name="primaryDarkColor">#005662</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <!--Secondary brand color-->
+    <color name="secondaryColor">#fc7915</color>
+    <color name="secondaryLightColor">#ffaa4b</color>
+    <color name="secondaryDarkColor">#c24a00</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <!--For splashscreen-->
     <color name="backgroundColor">#ffffff</color>
+
+    <color name="fabColor">#ffffff</color>
 
     <color name="workColor">#ff0000</color>
     <color name="pauseColor">#FFFF00</color>
     <color name="restColor">#00FF00</color>
-
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#ffffff</color>
 </resources>

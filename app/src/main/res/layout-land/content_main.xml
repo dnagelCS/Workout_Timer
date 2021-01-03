@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/content_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <include layout="@layout/main_include_rounds" />
+        <include layout="@layout/main_include_work"/>
+        <include layout="@layout/main_include_rest" />
+    </LinearLayout>
+
+</merge>

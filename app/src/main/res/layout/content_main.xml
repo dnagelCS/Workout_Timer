@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    tools:context=".activities.MainActivity">
+    android:layout_marginBottom="80dp"
+    tools:context=".activities.MainActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,71 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:background="@color/primaryLightColor">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/setsText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/rounds"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="32sp" />
-
-                <LinearLayout
-                    android:id="@+id/setsLinear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/setsText">
-
-                    <Button
-                        android:id="@+id/setsMinusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="decrementRounds"
-                        android:text="@string/sign_minus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/setsQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:freezesText="true"
-                        android:gravity="center_horizontal"
-                        android:text="@string/starting_rounds_main"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="26sp" />
-
-                    <Button
-                        android:id="@+id/setsPlusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="incrementRounds"
-                        android:text="@string/sign_plus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <include layout="@layout/main_include_rounds" />
 
             <View
                 android:layout_width="match_parent"
@@ -91,71 +31,7 @@
 
             </View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/workText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/work"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="32sp"
-                    app:layout_constraintTop_toBottomOf="@+id/setsLinear" />
-
-                <LinearLayout
-                    android:id="@+id/workLinear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/workText">
-
-                    <Button
-                        android:id="@+id/workMinusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="decrementWork"
-                        android:text="@string/sign_minus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/workQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:freezesText="true"
-                        android:gravity="center_horizontal"
-                        android:text="@string/starting_work"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="26sp" />
-
-                    <Button
-                        android:id="@+id/workPlusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="incrementWork"
-                        android:text="@string/sign_plus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <include layout="@layout/main_include_work" />
 
             <View
                 android:layout_width="match_parent"
@@ -164,72 +40,7 @@
 
             </View>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/restText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/rest"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="32sp"
-                    app:layout_constraintTop_toBottomOf="@+id/workLinear" />
-
-                <LinearLayout
-                    android:id="@+id/restLinear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/restText">
-
-                    <Button
-                        android:id="@+id/restMinusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="decrementRest"
-                        android:text="@string/sign_minus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-
-                        android:id="@+id/restQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:freezesText="true"
-                        android:gravity="center_horizontal"
-                        android:text="@string/starting_rest"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="26sp" />
-
-                    <Button
-                        android:id="@+id/restPlusBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/backgroundColor"
-                        android:onClick="incrementRest"
-                        android:text="@string/sign_plus"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <include layout="@layout/main_include_rest" />
 
             <View
                 android:layout_width="match_parent"
