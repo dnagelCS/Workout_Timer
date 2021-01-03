@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,9 @@ public class TimerActivity extends AppCompatActivity {
     private TextView mTv_work;
     private TextView mTv_rest;
     private  TextView mTv_rounds;
+
+    private MediaPlayer mpBeep;
+    private MediaPlayer mpTick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
