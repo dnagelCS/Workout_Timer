@@ -3,6 +3,7 @@ package com.example.workout_timer.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.CountDownTimer;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.workout_timer.R;
@@ -21,12 +23,25 @@ import static java.lang.String.format;
 public class TimerActivity extends AppCompatActivity {
     private RestTimer mRestTimer;
     private WorkTimer mWorkTimer;
+
     private long workTime;
     private long restTime;
+    private long currentWorkTime;
+    private long currentRestTime;
     private int rounds;
+
+    private boolean isWorkTimerRunning;
+    private boolean isRestTimerRunning;
+
+    private ConstraintLayout constraintLayout;
     private TextView mTv_work;
     private TextView mTv_rest;
     private TextView mTv_rounds;
+    private TextView mTv_paused;
+    private TextView mTv_motivation;
+    private Button pauseBtn;
+    private Button continueBtn;
+    private Button endButton;
 
     public final static long DEFAULT_WORK_MILS = 60000;
     public static final long DEFAULT_REST_MILS = 10000;
@@ -36,6 +51,7 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        setupActionBar();
         getIncomingData();
         setUpView();
         playWorkTimer();
@@ -60,29 +76,75 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void continueTimer(View view) {
+        if(isWorkTimerRunning){
+            mWorkTimer = new WorkTimer(currentWorkTime);
+            mWorkTimer.start();
+            setWorkView();
+        } else if(isRestTimerRunning){
+            mRestTimer = new RestTimer(currentRestTime);
+            mRestTimer.start();
+            setRestView();
+        }
     }
 
     public void pauseTimer(View view) {
+        if(isWorkTimerRunning){
+            mWorkTimer.cancel();
+        }else if (isRestTimerRunning){
+            mRestTimer.cancel();
+        }
+        setUpPauseView();
+    }
+
+    private void setUpPauseView() {
+        pauseBtn.setVisibility(View.GONE);
+        mTv_motivation.setVisibility(View.GONE);
+
+        mTv_paused.setVisibility(View.VISIBLE);
+        continueBtn.setVisibility(View.VISIBLE);
     }
 
     private void setUpView() {
+        //set up res fields
         mTv_work = findViewById(R.id.trainingWorkQuantity);
         mTv_rest = findViewById(R.id.trainingRestQuantity);
         mTv_rounds = findViewById(R.id.trainingSetsQuantity);
+
+        mTv_motivation = findViewById(R.id.trainingMotivationalText);
+        mTv_paused = findViewById(R.id.trainingPausedText);
+
+        pauseBtn = findViewById(R.id.pauseBtn);
+        continueBtn = findViewById(R.id.continueBtn);
+
         displayRounds();
         displayWorkTimerQuantity();
+        setWorkView();
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void setWorkView() {
+        //change background color
+        constraintLayout.setBackgroundColor(R.color.workColor);
+
+        //set as visible
+        mTv_motivation.setVisibility(View.VISIBLE);
+
+        //set as invisible
+        mTv_paused.setVisibility(View.GONE);
+        continueBtn.setVisibility(View.GONE);
+        mTv_rest.setVisibility(View.GONE);
     }
 
     private void getIncomingData() {
         Intent intent = getIntent();
         rounds = intent.getIntExtra("ROUNDS", 10);
-        restTime = intent.getLongExtra("REST_TIME", 10_000);
-        workTime = intent.getLongExtra("WORK_TIME", 60_000);
+        currentRestTime = restTime = intent.getLongExtra("REST_TIME", 10_000);
+        currentWorkTime = workTime = intent.getLongExtra("WORK_TIME", 60_000);
     }
 
     @SuppressLint("DefaultLocale")
     private void displayWorkTimerQuantity() {
-        int seconds = (int) workTime / 1000;
+        int seconds = (int) currentWorkTime / 1000;
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
@@ -92,17 +154,12 @@ public class TimerActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private void displayRestTimerQuantity() {
-        int seconds = (int) restTime / 1000;
+        int seconds = (int) currentRestTime / 1000;
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
-        if (displaySeconds < 10) {
-            mTv_work.setText(format("%d : 0%d", displayMinutes, displaySeconds));
-        } else {
-            mTv_work.setText(format("%d : %d", displayMinutes, displaySeconds));
-        }
-//        String leadingZero = displaySeconds > 9 ? "" : "0";
-//        mTv_rest.setText(format("%d : %s%d", displayMinutes, leadingZero, displaySeconds));
+        String leadingZero = displaySeconds > 9 ? "" : "0";
+        mTv_rest.setText(format("%d : %s%d", displayMinutes, leadingZero, displaySeconds));
     }
 
     @SuppressLint("DefaultLocale")
@@ -111,8 +168,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playWorkTimer() {
+        currentWorkTime = workTime;
         mWorkTimer = new WorkTimer(workTime);
         mWorkTimer.start();
+        isWorkTimerRunning = true;
     }
 
     class WorkTimer extends CountDownTimer {
@@ -135,26 +194,47 @@ public class TimerActivity extends AppCompatActivity {
          */
         @Override
         public void onTick(long millisUntilFinished) {
-            workTime = millisUntilFinished;
+            currentWorkTime = millisUntilFinished;
             displayWorkTimerQuantity();
         }
 
         /**
          * Callback fired when the time is up.
          */
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onFinish() {
             //play sounds
+            isWorkTimerRunning = false;
             playRestTimer();
             rounds--;
+            setRestView();
 
         }
     }
 
+    @SuppressLint("ResourceAsColor")
+    private void setRestView() {
+        //background color
+        constraintLayout.setBackgroundColor(R.color.restColor);
+
+        //set as visible
+        mTv_rest.setVisibility(View.VISIBLE);
+
+        //set as invisible
+        mTv_paused.setVisibility(View.GONE);
+        continueBtn.setVisibility(View.GONE);
+        mTv_motivation.setVisibility(View.GONE);
+        mTv_work.setVisibility(View.GONE);
+
+    }
+
     private void playRestTimer() {
         if (rounds > 0) {
+            currentRestTime = restTime;
             mRestTimer = new RestTimer(restTime);
             mRestTimer.start();
+            isRestTimerRunning = true;
         }
         //else { play the final sounds }
     }
@@ -179,7 +259,7 @@ public class TimerActivity extends AppCompatActivity {
          */
         @Override
         public void onTick(long millisUntilFinished) {
-            restTime = millisUntilFinished;
+            currentRestTime = millisUntilFinished;
             displayRestTimerQuantity();
         }
 
@@ -189,7 +269,9 @@ public class TimerActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             //play sounds
+            isRestTimerRunning = false;
             playWorkTimer();
+            setWorkView();
 
         }
     }
