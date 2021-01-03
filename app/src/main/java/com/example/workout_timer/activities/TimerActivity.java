@@ -30,6 +30,8 @@ public class TimerActivity extends AppCompatActivity {
     private long currentRestTime;
     private int rounds;
 
+    //used to know which timer to cancel when necessary.
+    //used in continueTimer(), pauseTimer(), endTimer() methods
     private boolean isWorkTimerRunning;
     private boolean isRestTimerRunning;
 
@@ -42,9 +44,9 @@ public class TimerActivity extends AppCompatActivity {
     private Button pauseBtn;
     private Button continueBtn;
 
-    public final static long DEFAULT_WORK_MILS = 60000;
-    public static final long DEFAULT_REST_MILS = 10000;
-    public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1000;
+    public final static long DEFAULT_WORK_MILS = 60_000;
+    public static final long DEFAULT_REST_MILS = 10_000;
+    public final static long COUNTDOWN_TIMER_INTERVAL_MILS = 1_000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,12 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    private void getIncomingData() {
+        Intent intent = getIntent();
+        rounds = intent.getIntExtra("ROUNDS", 10);
+        currentRestTime = restTime = intent.getLongExtra("REST_TIME", 10_000);
+        currentWorkTime = workTime = intent.getLongExtra("WORK_TIME", 60_000);
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -98,12 +106,14 @@ public class TimerActivity extends AppCompatActivity {
         setUpPauseView();
     }
 
-    private void setUpPauseView() {
-        pauseBtn.setVisibility(View.GONE);
-        mTv_motivation.setVisibility(View.GONE);
-
-        mTv_paused.setVisibility(View.VISIBLE);
-        continueBtn.setVisibility(View.VISIBLE);
+    public void endTimer(View view) {
+        if(isWorkTimerRunning){
+            mWorkTimer.cancel();
+        } else if(isRestTimerRunning){
+            mRestTimer.cancel();
+        }
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void setUpView() {
@@ -125,6 +135,14 @@ public class TimerActivity extends AppCompatActivity {
         setWorkView();
     }
 
+    private void setUpPauseView() {
+        pauseBtn.setVisibility(View.GONE);
+        mTv_motivation.setVisibility(View.GONE);
+
+        mTv_paused.setVisibility(View.VISIBLE);
+        continueBtn.setVisibility(View.VISIBLE);
+    }
+
     @SuppressLint("ResourceAsColor")
     private void setWorkView() {
         //change background color
@@ -140,12 +158,7 @@ public class TimerActivity extends AppCompatActivity {
         mTv_rest.setVisibility(View.GONE);
     }
 
-    private void getIncomingData() {
-        Intent intent = getIntent();
-        rounds = intent.getIntExtra("ROUNDS", 10);
-        currentRestTime = restTime = intent.getLongExtra("REST_TIME", 10_000);
-        currentWorkTime = workTime = intent.getLongExtra("WORK_TIME", 60_000);
-    }
+
 
     @SuppressLint("DefaultLocale")
     private void displayWorkTimerQuantity() {
@@ -179,16 +192,36 @@ public class TimerActivity extends AppCompatActivity {
         isWorkTimerRunning = true;
     }
 
-    public void endTimer(View view) {
-        if(isWorkTimerRunning){
-            mWorkTimer.cancel();
-        } else if(isRestTimerRunning){
-            mRestTimer.cancel();
-        }
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+    @SuppressLint("ResourceAsColor")
+    private void setRestView() {
+        //background color
+        constraintLayout.setBackgroundColor(R.color.restColor);
+
+        //set as visible
+        mTv_rest.setVisibility(View.VISIBLE);
+
+        //set as invisible
+        mTv_paused.setVisibility(View.GONE);
+        continueBtn.setVisibility(View.GONE);
+        mTv_motivation.setVisibility(View.GONE);
+        mTv_work.setVisibility(View.GONE);
+
     }
 
+    private void playRestTimer() {
+        if (rounds > 0) {
+            currentRestTime = restTime;
+            mRestTimer = new RestTimer(restTime);
+            mRestTimer.start();
+            isRestTimerRunning = true;
+        }
+        //else { play the final sounds }
+    }
+
+    /**
+     * inner class WorkTimer  and RestTimer are timer Models (re. MVC paradigm) it was easier to have
+     * them as an inner classes.
+     */
     class WorkTimer extends CountDownTimer {
 
         /**
@@ -229,31 +262,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
-    private void setRestView() {
-        //background color
-        constraintLayout.setBackgroundColor(R.color.restColor);
 
-        //set as visible
-        mTv_rest.setVisibility(View.VISIBLE);
-
-        //set as invisible
-        mTv_paused.setVisibility(View.GONE);
-        continueBtn.setVisibility(View.GONE);
-        mTv_motivation.setVisibility(View.GONE);
-        mTv_work.setVisibility(View.GONE);
-
-    }
-
-    private void playRestTimer() {
-        if (rounds > 0) {
-            currentRestTime = restTime;
-            mRestTimer = new RestTimer(restTime);
-            mRestTimer.start();
-            isRestTimerRunning = true;
-        }
-        //else { play the final sounds }
-    }
 
     class RestTimer extends CountDownTimer {
 
