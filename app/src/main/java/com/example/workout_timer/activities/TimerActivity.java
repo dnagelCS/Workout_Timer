@@ -116,6 +116,8 @@ public class TimerActivity extends AppCompatActivity {
         pauseBtn = findViewById(R.id.pauseBtn);
         continueBtn = findViewById(R.id.continueBtn);
 
+        constraintLayout = findViewById(R.id.timerActivity);
+
         displayRounds();
         displayWorkTimerQuantity();
         setWorkView();
@@ -128,6 +130,7 @@ public class TimerActivity extends AppCompatActivity {
 
         //set as visible
         mTv_motivation.setVisibility(View.VISIBLE);
+        mTv_work.setVisibility(View.VISIBLE);
 
         //set as invisible
         mTv_paused.setVisibility(View.GONE);
@@ -208,6 +211,7 @@ public class TimerActivity extends AppCompatActivity {
             isWorkTimerRunning = false;
             playRestTimer();
             rounds--;
+            displayRounds();
             setRestView();
 
         }
