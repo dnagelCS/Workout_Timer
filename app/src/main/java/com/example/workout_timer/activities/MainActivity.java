@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private int rounds;
 
     private SharedPreferences sharedPreferences;
+    // Name of Preference file on device
+    private final String mKeyPrefsName = "PREFS";
 
     private boolean mPrefBeepSound, mPrefTickSound;
     private String mKeyBeepSound, mKeyTickSound;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveToSharedPref() {
-        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(mKeyPrefsName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.clear();
         editor.putBoolean(mKeyBeepSound, mPrefBeepSound);
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setUpFAB();
         setFieldsToResValues();
         setUpDisplay();
+        restorePrefs();
     }
 
     private void setupToolbar() {
@@ -110,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
         displayWorkTimerQuantity();
         displayRestTimerQuantity();
         displayRounds();
+    }
+
+    private void restorePrefs() {
+        sharedPreferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+        mPrefBeepSound = sharedPreferences.getBoolean(mKeyBeepSound, true);
+        mPrefTickSound = sharedPreferences.getBoolean(mKeyTickSound, false);
     }
 
     @Override
