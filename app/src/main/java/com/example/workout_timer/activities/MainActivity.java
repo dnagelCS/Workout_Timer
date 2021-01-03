@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
     private void setFieldsToResValues() {
         mKeyBeepSound = getString(R.string.beep_sound);
         mKeyTickSound = getString(R.string.tick_sound);
-        beepSound = findViewById(R.id.beep_sound);
-        tickSound = findViewById(R.id.tick_sound);
     }
 
     /**
@@ -116,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        beepSound = menu.findItem(R.id.beep_sound);
+        tickSound = menu.findItem(R.id.tick_sound);
+
+        //start app with beep sound
+        beepSound.setChecked(true);
+
         return true;
     }
 
@@ -125,11 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.beep_sound) {
             toggleMenuItems();
-            mPrefBeepSound = item.isChecked();
             return true;
         } else if (id == R.id.tick_sound) {
             toggleMenuItems();
-            mPrefTickSound = item.isChecked();
             return true;
         } else if (id == R.id.action_about) {
             showAbout();
