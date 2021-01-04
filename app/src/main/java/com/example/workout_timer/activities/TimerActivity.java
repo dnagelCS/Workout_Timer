@@ -86,6 +86,7 @@ public class TimerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            endTimer();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
