@@ -93,7 +93,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public void continueTimer() {
+    public void continueTimer(View view) {
         if(isWorkTimerRunning){
             mWorkTimer = new WorkTimer(currentWorkTime);
             mWorkTimer.start();
@@ -108,7 +108,7 @@ public class TimerActivity extends AppCompatActivity {
         pauseBtn.setVisibility(View.VISIBLE);
     }
 
-    public void pauseTimer() {
+    public void pauseTimer(View view) {
         if(isWorkTimerRunning){
             mWorkTimer.cancel();
         }else if (isRestTimerRunning){
@@ -117,7 +117,11 @@ public class TimerActivity extends AppCompatActivity {
         setUpPauseView();
     }
 
-    public void endTimer() {
+    public void endTimer(View view) {
+        endTimer();
+    }
+
+    private void endTimer(){
         if(isWorkTimerRunning){
             mWorkTimer.cancel();
         } else if(isRestTimerRunning){
@@ -126,7 +130,6 @@ public class TimerActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
-
     }
 
     private void setUpView() {
