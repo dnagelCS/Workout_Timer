@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("ROUNDS", rounds);
             intent.putExtra("REST_TIME", restTime);
             intent.putExtra("WORK_TIME", workTime);
+            intent.putExtra("PREF_TICK", mPrefTickSound);
+            intent.putExtra("PREF_BEEP", mPrefBeepSound);
             startActivity(intent);
         });
     }
@@ -98,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
      * display that allows user to enter input
      */
     private void setUpDisplay() {
-        //mWorkTimer = new WorkTimer(DEFAULT_WORK_MILS, COUNTDOWN_TIMER_INTERVAL_MILS);
         workTime = DEFAULT_WORK_MILS;
         restTime = DEFAULT_REST_MILS;
         rounds = DEFAULT_ROUNDS;
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         //start app with beep sound
         beepSound.setChecked(true);
+        mPrefBeepSound = true;
 
         return true;
     }
@@ -132,9 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.beep_sound) {
             toggleMenuItems();
+            toggleSoundsBoolean();
             return true;
         } else if (id == R.id.tick_sound) {
             toggleMenuItems();
+            toggleSoundsBoolean();
             return true;
         } else if (id == R.id.action_about) {
             showAbout();
@@ -142,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleSoundsBoolean() {
+        mPrefBeepSound = !mPrefBeepSound;
+        mPrefTickSound = !mPrefTickSound;
     }
 
     private void toggleMenuItems() {
@@ -195,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         int displaySeconds = seconds % 60;
 
 
-        String leadingZero = displaySeconds > 9? "" : "0";
+        String leadingZero = displaySeconds > 9 ? "" : "0";
         mTv_setRest.setText(format("%d : %S%d", displayMinutes, leadingZero, displaySeconds));
     }
 
@@ -205,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         int displayMinutes = seconds / 60;
         int displaySeconds = seconds % 60;
 
-        String leadingZero = displaySeconds > 9? "" : "0";
+        String leadingZero = displaySeconds > 9 ? "" : "0";
         mTv_setWork.setText(format("%d : %S%d", displayMinutes, leadingZero, displaySeconds));
     }
 }
