@@ -18,11 +18,11 @@
         android:onClick="decrementRounds"
         android:text="@string/sign_minus"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/setsQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/roundsQuantity"
         app:layout_constraintTop_toBottomOf="@id/setsText" />
 
     <TextView
-        android:id="@+id/setsQuantity"
+        android:id="@+id/roundsQuantity"
         style="@style/styleTextViewQuantity"
         android:text="@string/starting_rounds_main"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
         android:onClick="incrementRounds"
         android:text="@string/sign_plus"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/setsQuantity"
+        app:layout_constraintStart_toEndOf="@+id/roundsQuantity"
         app:layout_constraintTop_toBottomOf="@id/setsText" />
 
 

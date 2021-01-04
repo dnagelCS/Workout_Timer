@@ -3,7 +3,6 @@ package com.example.workout_timer.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -60,11 +59,14 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
         setupActionBar();
         getIncomingData();
-        setUpView();
+        setUpInitialView();
         setUpSounds();
-        playWorkTimer();
+        runWorkTimer();
 
     }
+
+    //========================================================
+    //action bar
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -73,14 +75,6 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    private void getIncomingData() {
-        Intent intent = getIntent();
-        rounds = intent.getIntExtra("ROUNDS", 10);
-        currentRestTime = restTime = intent.getLongExtra("REST_TIME", 10_000);
-        currentWorkTime = workTime = intent.getLongExtra("WORK_TIME", 60_000);
-        mPrefBeepSound = intent.getBooleanExtra("PREF_BEEP", true);
-        mPrefTickSound = intent.getBooleanExtra("PREF_TICK", false);
-    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -92,12 +86,26 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    //========================================================
+
+    private void getIncomingData() {
+        Intent intent = getIntent();
+        rounds = intent.getIntExtra("ROUNDS", 10);
+        currentRestTime = restTime = intent.getLongExtra("REST_TIME", 10_000);
+        currentWorkTime = workTime = intent.getLongExtra("WORK_TIME", 60_000);
+        mPrefBeepSound = intent.getBooleanExtra("PREF_BEEP", true);
+        mPrefTickSound = intent.getBooleanExtra("PREF_TICK", false);
+    }
+
+    //========================================================
+    //onClick button methods
+
     public void continueTimer(View view) {
-        if(isWorkTimerRunning){
+        if (isWorkTimerRunning) {
             mWorkTimer = new WorkTimer(currentWorkTime);
             mWorkTimer.start();
             setWorkView();
-        } else if(isRestTimerRunning){
+        } else if (isRestTimerRunning) {
             mRestTimer = new RestTimer(currentRestTime);
             mRestTimer.start();
             setRestView();
@@ -108,9 +116,9 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void pauseTimer(View view) {
-        if(isWorkTimerRunning){
+        if (isWorkTimerRunning) {
             mWorkTimer.cancel();
-        }else if (isRestTimerRunning){
+        } else if (isRestTimerRunning) {
             mRestTimer.cancel();
         }
         setUpPauseView();
@@ -120,10 +128,10 @@ public class TimerActivity extends AppCompatActivity {
         endTimer();
     }
 
-    private void endTimer(){
-        if(isWorkTimerRunning){
+    private void endTimer() {
+        if (isWorkTimerRunning) {
             mWorkTimer.cancel();
-        } else if(isRestTimerRunning){
+        } else if (isRestTimerRunning) {
             mRestTimer.cancel();
         }
 
@@ -131,11 +139,14 @@ public class TimerActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setUpView() {
+    //========================================================
+    //set up view
+
+    private void setUpInitialView() {
         //set up res fields
         mTv_work = findViewById(R.id.trainingWorkQuantity);
         mTv_rest = findViewById(R.id.trainingRestQuantity);
-        mTv_rounds = findViewById(R.id.trainingSetsQuantity);
+        mTv_rounds = findViewById(R.id.trainingRoundsQuantity);
 
         mTv_motivation = findViewById(R.id.trainingMotivationalText);
         mTv_paused = findViewById(R.id.trainingPausedText);
@@ -167,9 +178,16 @@ public class TimerActivity extends AppCompatActivity {
         mTv_rest.setVisibility(View.GONE);
     }
 
-    private void setUpSounds() {
-        mpBeep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
-        mpTick = MediaPlayer.create(getApplicationContext(), R.raw.tick);
+    private void setRestView() {
+        //set as visible
+        mTv_rest.setVisibility(View.VISIBLE);
+
+        //set as invisible
+        mTv_paused.setVisibility(View.GONE);
+        continueBtn.setVisibility(View.GONE);
+        mTv_motivation.setVisibility(View.GONE);
+        mTv_work.setVisibility(View.GONE);
+
     }
 
     @SuppressLint("DefaultLocale")
@@ -197,42 +215,39 @@ public class TimerActivity extends AppCompatActivity {
         mTv_rounds.setText(format("%d", rounds));
     }
 
-    private void playWorkTimer() {
+    private void runWorkTimer() {
         currentWorkTime = workTime;
         mWorkTimer = new WorkTimer(workTime);
         mWorkTimer.start();
         isWorkTimerRunning = true;
     }
 
-    private void setRestView() {
-        //set as visible
-        mTv_rest.setVisibility(View.VISIBLE);
-
-        //set as invisible
-        mTv_paused.setVisibility(View.GONE);
-        continueBtn.setVisibility(View.GONE);
-        mTv_motivation.setVisibility(View.GONE);
-        mTv_work.setVisibility(View.GONE);
-
-    }
-
-    private void playRestTimer() {
+    private void runRestTimer() {
         if (rounds > 0) {
             currentRestTime = restTime;
             mRestTimer = new RestTimer(restTime);
             mRestTimer.start();
             isRestTimerRunning = true;
         }
-        //else { play the final sounds }
     }
 
-    private void playSounds(){
-        if(mPrefBeepSound){
+    //========================================================
+    // sounds
+
+    private void setUpSounds() {
+        mpBeep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+        mpTick = MediaPlayer.create(getApplicationContext(), R.raw.tick);
+    }
+
+    private void playSounds() {
+        if (mPrefBeepSound) {
             mpBeep.start();
-        } else if(mPrefTickSound){
+        } else if (mPrefTickSound) {
             mpTick.start();
         }
     }
+    //========================================================
+    //timer models
 
     /**
      * inner class WorkTimer  and RestTimer are timer Models (re. MVC paradigm) it was easier to have
@@ -271,12 +286,11 @@ public class TimerActivity extends AppCompatActivity {
             playSounds();
             rounds--;
             displayRounds();
-            playRestTimer();
+            runRestTimer();
             setRestView();
             this.cancel();
         }
     }
-
 
 
     class RestTimer extends CountDownTimer {
@@ -310,7 +324,7 @@ public class TimerActivity extends AppCompatActivity {
         public void onFinish() {
             playSounds();
             isRestTimerRunning = false;
-            playWorkTimer();
+            runWorkTimer();
             setWorkView();
             this.cancel();
         }
