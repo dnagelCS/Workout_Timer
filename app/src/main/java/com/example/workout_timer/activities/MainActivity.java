@@ -43,84 +43,17 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem beepSound, tickSound;
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(mKeyBeepSound, mPrefBeepSound);
-        outState.putBoolean(mKeyTickSound, mPrefTickSound);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        saveToSharedPref();
-    }
-
-    private void saveToSharedPref() {
-        sharedPreferences = getSharedPreferences(mKeyPrefsName, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.clear();
-        editor.putBoolean(mKeyBeepSound, mPrefBeepSound);
-        editor.putBoolean(mKeyTickSound, mPrefTickSound);
-        editor.apply();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupToolbar();
         setUpFAB();
-        setFieldsToResValues();
         setUpDisplay();
         restorePrefs();
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
-
-    private void setUpFAB() {
-        ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
-        fab.setOnClickListener(view -> {
-            //go to the TimerActivity now
-            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-            intent.putExtra("ROUNDS", rounds);
-            intent.putExtra("REST_TIME", restTime);
-            intent.putExtra("WORK_TIME", workTime);
-            intent.putExtra("PREF_TICK", mPrefTickSound);
-            intent.putExtra("PREF_BEEP", mPrefBeepSound);
-            startActivity(intent);
-        });
-    }
-
-    private void setFieldsToResValues() {
-        mKeyBeepSound = getString(R.string.beep_sound);
-        mKeyTickSound = getString(R.string.tick_sound);
-    }
-
-    /**
-     * display that allows user to enter input
-     */
-    private void setUpDisplay() {
-        workTime = DEFAULT_WORK_MILS;
-        restTime = DEFAULT_REST_MILS;
-        rounds = DEFAULT_ROUNDS;
-
-        mTv_setWork = findViewById(R.id.workQuantity);
-        mTv_setRest = findViewById(R.id.restQuantity);
-        mTv_setNumRounds = findViewById(R.id.setsQuantity);
-
-        displayWorkTimerQuantity();
-        displayRestTimerQuantity();
-        displayRounds();
-    }
-
-    private void restorePrefs() {
-        sharedPreferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
-        mPrefBeepSound = sharedPreferences.getBoolean(mKeyBeepSound, true);
-        mPrefTickSound = sharedPreferences.getBoolean(mKeyTickSound, false);
-    }
+    //========================================================
+    // Toggle Menu and Toolbar
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,11 +63,18 @@ public class MainActivity extends AppCompatActivity {
         beepSound = menu.findItem(R.id.beep_sound);
         tickSound = menu.findItem(R.id.tick_sound);
 
+        setToggleMenuItemStrings();
+
         //start app with beep sound
         beepSound.setChecked(true);
         mPrefBeepSound = true;
 
         return true;
+    }
+
+    private void setToggleMenuItemStrings() {
+        mKeyBeepSound = getString(R.string.beep_sound);
+        mKeyTickSound = getString(R.string.tick_sound);
     }
 
     @Override
@@ -170,6 +110,75 @@ public class MainActivity extends AppCompatActivity {
     private void showAbout() {
         showInfoDialog(this, R.string.app_name, R.string.about_message);
     }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+    //========================================================
+    // save shared preferences
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(mKeyBeepSound, mPrefBeepSound);
+        outState.putBoolean(mKeyTickSound, mPrefTickSound);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveToSharedPref();
+    }
+
+    private void saveToSharedPref() {
+        sharedPreferences = getSharedPreferences(mKeyPrefsName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putBoolean(mKeyBeepSound, mPrefBeepSound);
+        editor.putBoolean(mKeyTickSound, mPrefTickSound);
+        editor.apply();
+    }
+
+    private void restorePrefs() {
+        sharedPreferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+        mPrefBeepSound = sharedPreferences.getBoolean(mKeyBeepSound, true);
+        mPrefTickSound = sharedPreferences.getBoolean(mKeyTickSound, false);
+    }
+
+    //========================================================
+    // view and button capabilities
+    private void setUpFAB() {
+        ExtendedFloatingActionButton fab = findViewById(R.id.startButton);
+        fab.setOnClickListener(view -> {
+            //go to the TimerActivity now
+            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+            intent.putExtra("ROUNDS", rounds);
+            intent.putExtra("REST_TIME", restTime);
+            intent.putExtra("WORK_TIME", workTime);
+            intent.putExtra("PREF_TICK", mPrefTickSound);
+            intent.putExtra("PREF_BEEP", mPrefBeepSound);
+            startActivity(intent);
+        });
+    }
+
+    /**
+     * display that allows user to enter input
+     */
+    private void setUpDisplay() {
+        workTime = DEFAULT_WORK_MILS;
+        restTime = DEFAULT_REST_MILS;
+        rounds = DEFAULT_ROUNDS;
+
+        mTv_setWork = findViewById(R.id.workQuantity);
+        mTv_setRest = findViewById(R.id.restQuantity);
+        mTv_setNumRounds = findViewById(R.id.roundsQuantity);
+
+        displayWorkTimerQuantity();
+        displayRestTimerQuantity();
+        displayRounds();
+    }
+
 
     public void decrementRounds(View view) {
         rounds--;
