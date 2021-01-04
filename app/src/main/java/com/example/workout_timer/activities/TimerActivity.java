@@ -39,7 +39,6 @@ public class TimerActivity extends AppCompatActivity {
     //used to know which sound to play in playSounds() method
     private boolean mPrefBeepSound, mPrefTickSound;
 
-    private ConstraintLayout constraintLayout;
     private TextView mTv_work;
     private TextView mTv_rest;
     private TextView mTv_rounds;
@@ -144,8 +143,6 @@ public class TimerActivity extends AppCompatActivity {
         pauseBtn = findViewById(R.id.pauseBtn);
         continueBtn = findViewById(R.id.continueBtn);
 
-        constraintLayout = findViewById(R.id.timerActivity);
-
         displayRounds();
         displayWorkTimerQuantity();
         setWorkView();
@@ -159,11 +156,7 @@ public class TimerActivity extends AppCompatActivity {
         continueBtn.setVisibility(View.VISIBLE);
     }
 
-    @SuppressLint("ResourceAsColor")
     private void setWorkView() {
-        //change background color
-        constraintLayout.setBackgroundColor(R.color.secondaryColor);
-
         //set as visible
         mTv_motivation.setVisibility(View.VISIBLE);
         mTv_work.setVisibility(View.VISIBLE);
@@ -211,11 +204,7 @@ public class TimerActivity extends AppCompatActivity {
         isWorkTimerRunning = true;
     }
 
-    @SuppressLint("ResourceAsColor")
     private void setRestView() {
-        //background color
-        constraintLayout.setBackgroundColor(R.color.secondaryLightColor);
-
         //set as visible
         mTv_rest.setVisibility(View.VISIBLE);
 
@@ -276,7 +265,6 @@ public class TimerActivity extends AppCompatActivity {
         /**
          * Callback fired when the time is up.
          */
-        @SuppressLint("ResourceAsColor")
         @Override
         public void onFinish() {
             isWorkTimerRunning = false;
