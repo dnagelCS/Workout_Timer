@@ -4,8 +4,7 @@
     android:id="@+id/timerActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TimerActivity"
-    android:background="@color/workColor">
+    tools:context=".activities.TimerActivity">
 
     <ScrollView
         android:layout_width="match_parent"

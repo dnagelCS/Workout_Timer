@@ -159,7 +159,7 @@ public class TimerActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void setWorkView() {
         //change background color
-        constraintLayout.setBackgroundColor(R.color.workColor);
+        constraintLayout.setBackgroundColor(R.color.secondaryColor);
 
         //set as visible
         mTv_motivation.setVisibility(View.VISIBLE);
@@ -211,7 +211,7 @@ public class TimerActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void setRestView() {
         //background color
-        constraintLayout.setBackgroundColor(R.color.restColor);
+        constraintLayout.setBackgroundColor(R.color.secondaryLightColor);
 
         //set as visible
         mTv_rest.setVisibility(View.VISIBLE);
